@@ -16,6 +16,12 @@ function App() {
     setDots([...dots, dot]);
   };
 
+  const removeDot = (index: number) => {
+    const dotsList = [...dots];
+    dotsList.splice(index, 1);
+    setDots(dotsList);
+  };
+
   const resetDots = () => {
     setDots([]);
   };
@@ -29,12 +35,17 @@ function App() {
         }}
       >
         <>
-          {dots.map((dot: Dot) => {
-            console.log("start");
+          {dots.map((dot: Dot, index: number) => {
             console.log(`placing dot at: (${dot.x}, ${dot.y})`);
             return (
               <div
+                key={index}
                 className="dot"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  removeDot(index);
+                }}
                 style={{ left: `${dot.x}px`, top: `${dot.y}px` }}
               ></div>
             );
