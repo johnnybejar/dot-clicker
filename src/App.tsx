@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Color from "./Color";
 import "./App.css";
 
 interface Dot {
@@ -8,6 +9,7 @@ interface Dot {
 
 function App() {
   const [dots, setDots] = useState<Dot[]>([]);
+  const [color, setColor] = useState<string>("green");
 
   const placeDot = (e: React.MouseEvent) => {
     // The diameter of each dot is 25 pixels, so we subtract the radius
@@ -26,6 +28,10 @@ function App() {
     setDots([]);
   };
 
+  const changeDotColor = (color: string) => {
+    setColor(color);
+  };
+
   return (
     <>
       <div
@@ -36,7 +42,6 @@ function App() {
       >
         <>
           {dots.map((dot: Dot, index: number) => {
-            console.log(`placing dot at: (${dot.x}, ${dot.y})`);
             return (
               <div
                 key={index}
@@ -46,7 +51,11 @@ function App() {
                   e.preventDefault();
                   removeDot(index);
                 }}
-                style={{ left: `${dot.x}px`, top: `${dot.y}px` }}
+                style={{
+                  left: `${dot.x}px`,
+                  top: `${dot.y}px`,
+                  backgroundColor: color,
+                }}
               ></div>
             );
           })}
@@ -55,6 +64,7 @@ function App() {
       <button className="reset" onClick={resetDots}>
         Reset
       </button>
+      <Color onChange={changeDotColor} currentColor={color} />
     </>
   );
 }
