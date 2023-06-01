@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Color from "./Color";
 import "./App.css";
 
 interface Dot {
   x: number;
   y: number;
+  color: string;
 }
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
   const placeDot = (e: React.MouseEvent) => {
     // The diameter of each dot is 25 pixels, so we subtract the radius
     // from the coordinates so that the dot is centered
-    const dot: Dot = { x: e.clientX - 12.5, y: e.clientY - 12.5 };
+    const dot: Dot = { x: e.clientX - 12.5, y: e.clientY - 12.5, color };
     setDots([...dots, dot]);
     // Each time a dot is placed, the redos are wiped
     setRedos([]);
@@ -76,7 +77,7 @@ function App() {
                 style={{
                   left: `${dot.x}px`,
                   top: `${dot.y}px`,
-                  backgroundColor: color,
+                  backgroundColor: dot.color,
                 }}
               ></div>
             );
